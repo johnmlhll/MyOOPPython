@@ -1,2 +1,2 @@
 # MyOOPPython
-A repository for my Python code and projects. Code that is specific to 'Python Ireland' projects will not be stored here. Please see 'broadgauge' for Python Ireland related code snippets and projects.
+A repository for my Python code and projects. Code that is Python related, including python core console apps, python web apps, python analysis script including pyspark, pandas, plotly, ggplot, numpy, matplotlib plus more will be eventually stored here. For Python Ireland code, please see 'broadgauge' for related code snippets and projects.
