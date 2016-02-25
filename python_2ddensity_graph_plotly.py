@@ -1,4 +1,6 @@
 %pylab inline
+#Example of a plotly desnisty graph using randmom method data in hte "online context"
+#Graph result is to be found online at https://plot.ly/organize/johnmlhll:20
 
 #import libraries
 import dataiku
@@ -14,14 +16,14 @@ import numpy as np
 sc = pyspark.SparkContext()
 sqlContext = SQLContext(sc)
 
-#import api creditentals for the author: John Mulhall @johnmlhll
-py.sign_in('johnmlhll','*api_key*')
+#import api credentals for the author: John Mulhall @johnmlhll
+py.sign_in('username','*api_key*')
 
 # creating a sample 3 dimensional density flow chart with periphal datacharts
 #setting variables using np.random
 t = np.linspace(-1,1.2,2000)
-x = (t**3)+(0.3*np.random.randn(2000))
-y = (t**6)+(0.3*np.random.randn(2000))
+x = (t**3)+(22.3*np.random.randn(2000))
+y = (t**6)+(51.3*np.random.randn(2000))
 
 #first plot for tracing scatterplot using plotly.graph_objs
 trace1 = go.Scatter(
@@ -77,4 +79,4 @@ yaxis2=dict(
 
 #plot graph figure and output
 fig = go.Figure(data=data, layout=layout)
-plot_url = py.plot(fig, filename='2D Density Plot/Histogram (Sample)')
+plot_url = py.plot(fig, filename='2D Density Plot/Histogram (Online Sample)')
