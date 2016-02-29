@@ -19,7 +19,7 @@ import plotly.graph_objs as go
 import pandas as pd
 
 #initalise plotly offline notebook
-init_notebook_mode()
+py.init_notebook_mode()
 
 #initalise pyspark
 sc = pyspark.SparkContext()
