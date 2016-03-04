@@ -25,23 +25,23 @@ sqlContext = SQLContext(sc)
 intCS_ds = dataiku.Dataset("MyInternetClickStreamDataSet")
 
 #assign to pyspark df
-booking_search_df = dkuspark.get_dataframe(sqlContext, booking_search_ds)
+intCS_df = dkuspark.get_dataframe(sqlContext, intCS_ds)
 
 #instantiate toPandas as a single call df
-booking_search_df_pandas = booking_search_df.toPandas()
+intCS_df_pandas = intCS_df.toPandas()
 
 #declare coordinates and map the plot
 trace1 = go.Bar(
-    x = booking_search_df_pandas['search_ymd_parsed_month'],
-    y = booking_search_df_pandas['search_qty_sum'],
+    x = intCS_df_pandas['search__month'],
+    y = intCS_df_pandas['search_count'],
     name = 'Search Totals',
     marker=dict(
         color='rgb(26,118,255)'
     )
 ),
 trace2 = go.Bar(
-    x = booking_search_df_pandas['search_ymd_parsed_month'],
-    y = booking_search_df_pandas['booking_qty_sum'],
+    x = intCS_df_pandas['search_month'],
+    y = intCS_df_pandas['booking_count'],
     name = 'Booking Totals',
     marker=dict(
         color='rgb(55,83,109)'
@@ -51,7 +51,7 @@ data=[trace1, trace2]
 
 #map the layout and styling features (if using Jupyter notebooks, code this in a new cell!)
 layout=go.Layout(
-title = 'Search to Bookings - 2015',
+title = 'WebSite Search to Sales - 2015',
     xaxis=dict(
     tickfont=dict(
         size = 14,
