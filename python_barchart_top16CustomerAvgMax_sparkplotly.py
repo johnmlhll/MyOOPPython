@@ -60,16 +60,16 @@ data=[trace1, trace2]
 
 #Define graph layout
 layout = go.Layout(
-    title = "Top 16 Visitor_Id Avg_Bookings to Booking_Max",
+    title = "Top 16 Customer Avg Sales to Max Sale Volume",
     xaxis=dict(
-    title='Top 16 Visitor_id (Booking_Max/City_Count > 5) Numbers',
+    title='Top 16 Customer Numbers',
     tickfont=dict(
             size=14,
             color='rgb(107,107,107)'
         )
     ),
     yaxis=dict(
-    title='Count Value - Bookings/Cities',
+    title='Count Value - Sales',
     titlefont=dict(
         size=16,
         color='rgb(107,107,107)'
