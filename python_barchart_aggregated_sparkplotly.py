@@ -54,14 +54,16 @@ layout=go.Layout(
 title = 'WebSite Search to Sales - 2015',
     xaxis=dict(
     tickfont=dict(
+        title = 'Month',
         size = 14,
         color = 'rgb(107,107,107)'
         )
     ),
     yaxis=dict(
-    titlefont=dict(
-        size = 16,
-        color = 'rgb(107,107,107)'
+        title = 'Count Sales Transactions',
+        titlefont=dict(
+            size = 16,
+            color = 'rgb(107,107,107)'
     ),
     tickfont=dict(
         size=14,
