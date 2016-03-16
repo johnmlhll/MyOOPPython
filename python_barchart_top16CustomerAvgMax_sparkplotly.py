@@ -31,11 +31,13 @@ intCS_df = dkuspark.get_dataframe(sqlContext, intCS_ds)
 #instantiate toPandas as a single call df
 intCS_df_pandas = intCS_df.toPandas()
 
-#Assign customer_ids to "ID" from 1-20 (sequental) for presentation purposes on the X-Axis
+#Assign customer_ids to "ID" from 1-20 (sorted & sequental)
+#for presentation purposes on the X-Axis
 customer_id = intCS_df_pandas['customer_id']
 cust_id=[]
 for id in cust_id:
     cust_id='ID'.join(id)
+intCS_df_pandas.sort(['sales_avg','sales_max'], ascending=[0], inplace=True)
 
 #Plot Data and Data variables for bars on chart
 #average sales total (avg of count of bookings) by cust_id
