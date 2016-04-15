@@ -27,6 +27,7 @@ for file_name in file_names:
     with zipfile.ZipFile(path, 'r') as z:
        o = pd.read_csv( z.open(nv) )
        results = pd.concat((results, o))
+
 print results.shape
 
 # Parse the bike date day timestamp
@@ -36,9 +37,8 @@ def get_day(date):
 results['day'] = results['Start date'].map(get_day)
 
 #Return results in a dataframe per day
-days = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
-for day in days:
-    print "Doing %s..." %day
+for day in results:
+    print "Doing %s..." % day
     df = results[results['day']==day]
     filename = 'capitalbikeshare_trip_data_{}.csv'.format(day)
     out = os.path.join(out_path, filename)
