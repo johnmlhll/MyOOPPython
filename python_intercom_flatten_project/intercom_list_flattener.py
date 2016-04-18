@@ -29,5 +29,4 @@ class Intercom_List_Flattener(object):
                 print "Error message is ",e.message
         else:
             print "Oh, no list was processed this time. try again..."
-
-    print flatten(stacked_array_inputs) #TEST CODE
+    print flatten(stacked_array_inputs)
