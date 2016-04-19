@@ -18,7 +18,6 @@ class Intercom_Test_Class(unittest.TestCase):
         try:
             self.assertTrue(type(stacked_array_inputs) == int)
             self.assertListEqual(stacked_array_inputs, test_list)
-
             print "Test passed"
         except Exception as e:
             print "Test failed: Error is ", e.message
