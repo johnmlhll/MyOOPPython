@@ -1,9 +1,7 @@
 #declare global list variables
 processed_list = []
-str_processed_list = []
-final_processed_list = []
-stacked_array_inputs = [4,2,1,[1,82,3,1],2,3,4,[4,99,5],3,[0]]
-remove_items = []
+stacked_array_inputs = [4,2,100,[1,82,302,1],2,3,4,[411,99089,5],312,[0, 33]]
+
 
 
 class Intercom_List_Flattener(object):
@@ -16,20 +14,17 @@ class Intercom_List_Flattener(object):
     #Generator Method to flatten list
     def flatten(stacked_array_inputs):
         try:
-            #[map(int, item.split(",")) for item in str(stacked_array_inputs)]
+            #interrograte and flatten list of lists using for loops and list data type int
             for item in stacked_array_inputs:
-                for subitem in str(item):
-                    if subitem.isdigit():
+                if type(item) == int:
+                    processed_list.append(item)
+                else:
+                    for subitem in item:
                         processed_list.append(subitem)
-            #remove non numeric characters from the list, then back to int list
-            for p in processed_list:
-                if p.isdigit():
-                    str_processed_list.append(p)
-            final_processed_list = map(int, str_processed_list)
-            return final_processed_list
+            return processed_list
         except Exception as e:
                 print "Something with wrong with the flattening of the list"
                 print "Error message is ",e.message
         else:
-            print "Oh, no list was processed this time. try again..."
+            print "List flattening process completed... please check for errors, something went wrong..."
     print flatten(stacked_array_inputs)
