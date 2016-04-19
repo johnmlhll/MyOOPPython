@@ -17,9 +17,9 @@ class Intercom_Main_Flatten_Arrays(object):
         #instantiate test class
         test = Intercom_Test_Class()
 
-        #call tests
-        test.test_flatten_lists()
-        test.test_flatten_outputs()
+        #call test
+        test.test_flatten_lists
+        test.test_flatten_outputs
 
         #instantiate list flattener class
         flat = Intercom_List_Flattener()
