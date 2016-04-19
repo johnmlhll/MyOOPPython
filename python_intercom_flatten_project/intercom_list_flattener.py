@@ -3,6 +3,7 @@ processed_list = []
 str_processed_list = []
 final_processed_list = []
 stacked_array_inputs = [4,2,1,[1,82,3,1],2,3,4,[4,99,5],3,[0]]
+remove_items = []
 
 
 class Intercom_List_Flattener(object):
@@ -15,9 +16,11 @@ class Intercom_List_Flattener(object):
     #Generator Method to flatten list
     def flatten(stacked_array_inputs):
         try:
+            #[map(int, item.split(",")) for item in str(stacked_array_inputs)]
             for item in stacked_array_inputs:
-                for subitem in repr(item):
-                    processed_list.append(subitem)
+                for subitem in str(item):
+                    if subitem.isdigit():
+                        processed_list.append(subitem)
             #remove non numeric characters from the list, then back to int list
             for p in processed_list:
                 if p.isdigit():
