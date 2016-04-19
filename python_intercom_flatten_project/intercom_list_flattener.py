@@ -2,8 +2,6 @@
 processed_list = []
 stacked_array_inputs = [4,2,100,[1,82,302,1],2,3,4,[411,99089,5],312,[0, 33]]
 
-
-
 class Intercom_List_Flattener(object):
 
     #Init method acting as a constructor
