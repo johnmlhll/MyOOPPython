@@ -35,8 +35,6 @@ def processCustomerFile():
     try:
         # dict/variables
         customer_list = {}
-        copy_dict = {}
-        invite_count = 0
 
         #read in json file with dict
         file_name = open(getFilePath())
