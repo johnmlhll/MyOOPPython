@@ -1,4 +1,5 @@
 build
 dist
-customers.spec
+customers.pyc
+invite_main.spec
 
