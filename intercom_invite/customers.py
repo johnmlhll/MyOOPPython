@@ -1,10 +1,7 @@
-#The Challenge: Q3 of the Intercom Screening Test = Screen a json customer
+#The Challenge: Screen a json customer
 #list and return a party invite list that shows customer names with user_ids,
-#which are <100km from the intercom office coordiantes provided.
-#Approach on this one is more functional then OOP/Class driven
-#The program has only one input from a json file with a straight
-#forward processing path to completion (validated invite list)
-#Applicant name is John Mulhall, Twitter @johnmlhll
+#which are <100km from the company office coordiantes provided.
+#John Mulhall, Twitter @johnmlhll
 
 #import libraries
 import json
@@ -13,77 +10,114 @@ from os.path import expanduser
 from pprint import pprint
 
 # Declare variables/dicts/
-lines = {}
-invite_name = []
-invite_user_id = []
 invite_dict = {}
+file_path = ""
+invite_file = ""
+lines = {}
+isValid = False
 
-# Function 01 - get file path for local machine.
-def getFilePath():
-    try:
-        home = expanduser("~")
-        file_path = os.path.join(home, 'customers.json')
-    except IOError as fe:
-        print "Oh, something went wrong, error message is ",fe.with_traceback
-        print 'Welcome, please make sure your .json file is in your home folder: ', home
-    return file_path
 
-getFilePath() #function call
+class Customers(object):
+   #instance dict declaration
+   customer_lines = {}
 
-# Function 02 - read file and process details from the json read into a dict for processing
-def processCustomerFile():
-    try:
-        # dict/variables
-        customer_list = {}
+   def __init__(self):
+      self.file_path = file_path
+      self.customer_lines = self.customer_lines
+      self.invite_dict = invite_dict
+      self.lines = lines
+      self.invite_file = invite_file
+      self.isValid = isValid
 
-        #read in json file with dict
-        file_name = open(getFilePath())
-        lines = file_name.readlines()
+    # Method 01 - get file path for local machine.
+   def get_file_path(self):
+      try:
+         print '\n'
+         file_name = raw_input("Please enter your file name in home folder now: ")
+         self.file_path = os.path.join(expanduser('~')+'/',file_name)
+         if os.path.exists(self.file_path):
+            self.isValid = True
+         return self.file_path
+      except Exception, e:
+         print "\n"
+         print "Oh, something went wrong in getting your file and validating it..."
+         print "Error message is ", str(e)
+         print 'Please make sure your .json file is in your home folder... '
 
-        for line in lines:
-            customer_list = json.loads(line)
-            #process coordinates from dict to see if they are 100km from "home_coordinates"
-            HOME_LAT = float(53.3381985)
-            HOME_LON = float(-6.2592576)
-            EARTH_RADIUS = 6371000 #meters
+    # Method 02 - read file and process records
+   def read_customer_file(self):
+      try:
+         #read in json file with dict
+         file_name = open(self.file_path)
+         self.lines = file_name.readlines()
+         print '\n'
+         return self.lines
+      except Exception, e:
+         print "\n"
+         print "Oh no, something has gone wrong in method read_customer_file()..."
+         print "Error message is ", str(e)
 
-            lat1 = ''
-            lon1 = ''
+    #Method 03 - process customer list coordinates from readCustomerFile() againts home coordinates
+   def process_customer_coordinates(self):
+      #process coordinates from dictLine to see if they are 100km from "home_coordinates"
+      HOME_LAT = float(53.3381985)
+      HOME_LON = float(-6.2592576)
 
+      EARTH_RADIUS = 6371000 #meters
+      lat1 = ''
+      lon1 = ''
+      customer_distance = 0
+      desired_distance  = 100
+
+      for line in self.lines: #Iterate over lines and then load the line for processing
+         self.customer_lines = json.loads(line)
+         try:
             #calculation performed in Meters, then aggregrated to Kilometers
-            for cust, value in customer_list.iteritems():
-                lat1 = float(customer_list["latitude"])
-                lon1 = float(customer_list["longitude"])
+            for (key), (value)  in self.customer_lines.iteritems():
+               lat1 = float(self.customer_lines["latitude"])
+               lon1 = float(self.customer_lines["longitude"])
+               dist_lat = math.radians(lat1-HOME_LAT)
+               dist_lon = math.radians(lon1-HOME_LON)
 
-                dist_lat = math.radians(lat1-HOME_LAT)
-                dist_lon = math.radians(lon1-HOME_LON)
+               coordinates_conv = math.sin(dist_lat/2) * math.sin(dist_lat/2) + math.cos(math.radians(HOME_LAT))\
+               * math.cos(math.radians(dist_lat)) * math.sin(dist_lon/2) * math.sin(dist_lon/2)
 
-                coordinates_conv = math.sin(dist_lat/2) * math.sin(dist_lat/2) + math.cos(math.radians(HOME_LAT))\
-                * math.cos(math.radians(dist_lat)) * math.sin(dist_lon/2) * math.sin(dist_lon/2)
+               coordinates_calc = 2 * math.atan2(math.sqrt(coordinates_conv), math.sqrt(1 - coordinates_conv))
+               coordinates_dist = float(EARTH_RADIUS * coordinates_calc)
 
-                coordinates_calc = 2 * math.atan2(math.sqrt(coordinates_conv), math.sqrt(1 - coordinates_conv))
+               customer_distance = round(coordinates_dist/1000, 2)
 
-                coordinates_dist = float(EARTH_RADIUS * coordinates_calc)
-                customer_distance = round(coordinates_dist, 2)/1000 #aggregate back to Kilometers
+               #Assignent of customer distance to the invite list or not.
+               #Assignement also to file object for printing to screen & file
+               if customer_distance <= desired_distance:
+                  self.invite_dict['distance'] = customer_distance
+                  if value not in invite_dict.values():
+                     self.invite_dict.update(self.customer_lines)
+                     self.invite_file = self.invite_file + "Name: %s | Customer ID: %s | Distance %s \n" % (invite_dict["name"], invite_dict["user_id"], invite_dict["distance"])
+            print '\n'
 
-            #Assignent of customer distance to the invite list or not.
-            if customer_distance <= 100:
-                invite_dict.update(customer_list)
-                invite_name.append(invite_dict['name'])
-                invite_user_id.append(invite_dict['user_id'])
-    except Exception as e:
-        print "Oh no, something has gone wrong..."
-        print "Error message is ", e.message
+         except Exception, e:
+               print "\n"
+               print "Oh no, something has gone wrong in method process_customer_coordinates()..."
+               print "Error message is ", str(e)
 
-processCustomerFile() #function call
+   #Method 04 - return list of customers and Ids within target radius of home office
+   def print_invite_list(self):
+      try:
+         if self.isValid == True and self.invite_file != "":
+            print "-------------------------------------------------------"
+            print "Validated Customer Invitation List for Company Party"
+            print "-------------------------------------------------------"
+            print self.invite_file
+            print '\n'
+            print 'Note: Validated Customers are located < 100KM from Company HQ'
+            print "--------------------------------------------------------------"
+         else:
+            print '\n'
+            print 'Sorry, your file never validated - please revise and retry...'
 
-def getInviteList():
-    print "-------------------------------------------------------"
-    print "Validated Customer Invitation List for Intercom Party"
-    print "-------------------------------------------------------"
-    for i in xrange(len(invite_name)):
-        print "Name: ", invite_name[i], "with User ID: ", invite_user_id[i]
-    print '\n'
-    print 'Note: Validated Customers are located < 100KM from Intercom HQ'
-    print "--------------------------------------------------------------"
-getInviteList() #function call
+      except Exception, e:
+            print "\n"
+            print "Oh no, something has gone wrong in method process_customer_coordinates()..."
+            print "Error message is ", str(e)
+            

@@ -3,46 +3,51 @@
 
 #import libraries
 import unittest
-import json, os
-from os.path import expanduser
+from customers import Customers
 
-#Variables, lists, etc
+#instantiate class for test purposes
+tcust = Customers()
 
 
-#Connect with json data file
-def getFilePath():
-    try:
-        home = expanduser("~")
-        file_path = os.path.join(home, 'customers.json')
-    except IOError as fe:
-        print "Oh, something went wrong, error message is ",fe.with_traceback
-        print 'Welcome, please make sure your .json file is in your home folder: ', home
-    return file_path
+class Test_Class(unittest.TestCase):
 
-getFilePath()    #function call.
-
-class TestCustomers(unittest.TestCase):
     #test method 1 - test file import
-    def test_data(self):
+    def test_get_file_path(self):
         self.setUp()
-        test_data = {"latitude": "52.986375", "user_id": 12, "name": "Christina McArdle", "longitude": "-6.043701"}
-        self.assertTrue(type(test_data) == dict)
+        self.assertTrue(type(tcust.isValid) == bool)
+        self.assertFalse(tcust.isValid)
+        self.assertTrue(type(tcust.file_path) == str)
+        self.assertTrue(tcust.file_path == "")
+        self.assertRaises(Exception, tcust.get_file_path())
         self.tearDown()
-    #test method 2 - test processing
+
+    #test method 2 - read customer file
+    def test_read_customer_file(self):
+        self.setUp()
+        self.assertTrue(type(tcust.lines) == dict)
+        self.assertTrue(tcust.lines == {})
+        self.assertRaises(Exception, tcust.read_customer_file())
+        self.tearDown()
+
+    #test method 3 - test processing
     def test_processing(self):
         self.setUp()
-        lines = {}
-        invite_name = []
-        invite_user_id = []
-        invite_dict = {}
-        customer_list = {"latitude": "53.2451022", "user_id": 4, "name": "Ian Kehoe", "longitude": "-6.238335"}
-        HOME_LAT = float(53.3381985)
-        self.assertTrue(type(HOME_LAT) == float)
-        self.assertTrue(type(customer_list) == dict)
-        self.assertTrue(type(invite_dict) == dict)
-        self.assertTrue(type(invite_name) == list)
-        self.assertTrue(type(invite_user_id) == list)
-        self.assertTrue(type(lines) == dict)
+        self.assertTrue(tcust.customer_lines == {})
+        self.assertTrue(tcust.invite_dict == {})
+        self.assertTrue(tcust.invite_file == "")
+        self.assertTrue(type(tcust.customer_lines) == dict)
+        self.assertTrue(type(tcust.invite_dict) == dict)
+        self.assertTrue(type(tcust.invite_file) == str)
+        self.assertRaises(Exception, tcust.process_customer_coordinates())
+        self.tearDown()
+
+    #Test method 4 - printing str object results (invite list)
+    def test_print_invite_list(self):
+        self.setUp()
+        self.assertTrue(tcust.isValid)
+        self.assertTrue(tcust.invite_file == "")
+        self.assertTrue(type(tcust.invite_file) == str)
+        self.assertRaises(Exception, tcust.print_invite_list())
         self.tearDown()
 
 if __name__ == '__main__':
