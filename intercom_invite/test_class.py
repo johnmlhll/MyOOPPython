@@ -19,6 +19,7 @@ class Test_Class(unittest.TestCase):
         self.assertTrue(type(tcust.file_path) == str)
         self.assertTrue(tcust.file_path == "")
         self.assertRaises(Exception, tcust.get_file_path())
+        self.assertTrue(tcust.get_file_path())
         self.tearDown()
 
     #test method 2 - read customer file
@@ -27,10 +28,11 @@ class Test_Class(unittest.TestCase):
         self.assertTrue(type(tcust.lines) == dict)
         self.assertTrue(tcust.lines == {})
         self.assertRaises(Exception, tcust.read_customer_file())
+        self.assertTrue(tcust.read_customer_file())
         self.tearDown()
 
     #test method 3 - test processing
-    def test_processing(self):
+    def test_process_customer_coordinates(self):
         self.setUp()
         self.assertTrue(tcust.customer_lines == {})
         self.assertTrue(tcust.invite_dict == {})

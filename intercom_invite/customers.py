@@ -93,9 +93,8 @@ class Customers(object):
                   self.invite_dict['distance'] = customer_distance
                   if value not in invite_dict.values():
                      self.invite_dict.update(self.customer_lines)
-                     self.invite_file = self.invite_file + "Name: %s | Customer ID: %s | Distance %s \n" % (invite_dict["name"], invite_dict["user_id"], invite_dict["distance"])
+                     self.invite_file = self.invite_file + "\t%s     \t%s  \t%s\n" % (invite_dict["name"], invite_dict["user_id"], invite_dict["distance"])
             print '\n'
-
          except Exception, e:
                print "\n"
                print "Oh no, something has gone wrong in method process_customer_coordinates()..."
@@ -105,19 +104,19 @@ class Customers(object):
    def print_invite_list(self):
       try:
          if self.isValid == True and self.invite_file != "":
-            print "-------------------------------------------------------"
-            print "Validated Customer Invitation List for Company Party"
-            print "-------------------------------------------------------"
+            print "\t-------------------------------------------------------"
+            print "\tValidated Customer Invitation List for Company Party"
+            print "\t-------------------------------------------------------"
+            print "\tName          \tCustomer ID \tDistance (km) \n"
+            print "\t-------------------------------------------------------"
             print self.invite_file
             print '\n'
-            print 'Note: Validated Customers are located < 100KM from Company HQ'
-            print "--------------------------------------------------------------"
+            print '\tNote: Validated Customers are located < 100KM from Company HQ'
+            print "\t--------------------------------------------------------------"
          else:
             print '\n'
             print 'Sorry, your file never validated - please revise and retry...'
-
       except Exception, e:
             print "\n"
             print "Oh no, something has gone wrong in method process_customer_coordinates()..."
             print "Error message is ", str(e)
-            
