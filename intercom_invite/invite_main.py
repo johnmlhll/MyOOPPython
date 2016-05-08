@@ -19,5 +19,6 @@ class  Invite_Main(object):
    cust.print_invite_list()
 
    if __name__ == '__main__':
-           print "Thank You for using this program.. Have a great day!"
-           print "----------------------------------------------------"
+      print "\n"
+      print "Thank You for using this program.. Have a great day!"
+      print "----------------------------------------------------"
